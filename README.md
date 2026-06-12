@@ -1,0 +1,1 @@
+A personal RAG/langchain project I am doing during my internship at Sopra where I experiment with new concepts and tools. The base project is from a Udemy course by Eden Marco, to which I add improvements as I experiment. 

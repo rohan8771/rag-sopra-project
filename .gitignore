@@ -1,0 +1,151 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Logs
+*.log
+logs/
+app.log
+
+# Local databases / generated data
+db.sqlite3
+db.sqlite3-journal
+
+# Vector stores / generated knowledge bases
+chroma_db/
+.chroma_db/
+langchain-docs/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+# .python-version
+
+# pipenv
+# Keep Pipfile.lock tracked for reproducible app environments.
+# Pipfile.lock
+
+# poetry
+# poetry.lock
+
+# pdm
+.pdm.toml
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# IDE/editor files
+.vscode/settings.json
+.idea/
+.spyderproject
+.spyproject
+.ropeproject
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Sphinx documentation
+docs/_build/
+
+# MkDocs documentation
+/site/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Ruff / linting cache
+.ruff_cache/
+
+# Cython debug symbols
+cython_debug/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
