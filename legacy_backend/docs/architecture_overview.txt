@@ -1,0 +1,7 @@
+The legacy backend is a small enterprise system with Billing and Customer modules.
+
+Billing handles invoice generation and payment status updates.
+
+Customer handles customer profile lookup and address updates.
+
+The system uses Java 8, Oracle 11g, JDBC, and SOAP-based communication with an external CRM system.

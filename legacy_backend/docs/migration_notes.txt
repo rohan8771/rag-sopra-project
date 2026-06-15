@@ -1,0 +1,9 @@
+Migration notes:
+
+The target architecture should move Billing and Customer modules to Spring Boot REST services.
+
+Oracle 11g should be replaced with PostgreSQL.
+
+SOAP communication with CRM should be replaced or wrapped with REST APIs.
+
+Batch jobs should include retry handling, logging, and alerting.

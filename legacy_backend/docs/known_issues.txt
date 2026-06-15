@@ -1,0 +1,7 @@
+Known issues:
+
+1. Billing uses hardcoded SQL queries.
+2. Oracle 11g is outdated and unsupported.
+3. Invoice batch job fails sometimes and must be restarted manually.
+4. SOAP calls to the CRM system have no retry handling.
+5. Customer address updates are not properly validated.
