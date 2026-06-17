@@ -14,7 +14,7 @@ from backend.core import LOADED_COLLECTION_NAMES, run_llm
 #   - LangChain docs collection
 #   - legacy backend source/code chunks
 #   - LangExtract structured records
-#   - any other collection you add later
+#   - any other collection we add later
 
 WELCOME_MESSAGE = (
     "Ask me anything about the local knowledge base. "
@@ -114,16 +114,12 @@ def _format_sources(context_docs: List[Any]) -> List[Dict[str, str]]:
         }
 
         # Deduplicate source records.
-        #
-        # We use all displayed fields as the key, because the same source file
-        # may appear with different class/method metadata.
         key = tuple(source_record.items())
 
         if key not in seen:
             sources.append(source_record)
             seen.add(key)
 
-    # Stable ordering makes the UI less jumpy.
     return sorted(
         sources,
         key=lambda item: (
@@ -205,7 +201,7 @@ def _initialize_session_state() -> None:
 
     chat_messages:
         Used only for clean UI display.
-        This is separate from the actual backend memory.
+        This is of course separate from the agent's conversation memory
     """
     if "thread_id" not in st.session_state:
         st.session_state.thread_id = str(uuid4())

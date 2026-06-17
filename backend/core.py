@@ -43,9 +43,6 @@ CHAT_MODEL = "gpt-5-mini"
 DOCS_PER_COLLECTION = 5
 
 # Final number of docs passed to the LLM after BM25 reranking.
-#
-# Since we now have multiple collections, 6 gives the model a bit more room
-# than the older top_k=4.
 FINAL_DOCS_AFTER_RERANK = 6
 
 
@@ -53,14 +50,9 @@ FINAL_DOCS_AFTER_RERANK = 6
 # Model and embeddings
 # ---------------------------------------------------------------------------
 
-# Must match the embedding model used during ingestion.
 embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL)
 
-# Main chat model used by the agent.
-#
-# Important:
-#   In this simplified version, we do NOT use the model to generate extra
-#   search queries. The model is only used by the agent for answering/tool use.
+# chat model used by the agent.
 model = init_chat_model(
     CHAT_MODEL,
     model_provider="openai",
@@ -68,15 +60,6 @@ model = init_chat_model(
 )
 
 
-# ---------------------------------------------------------------------------
-# Load all Chroma collections from chroma_db
-# ---------------------------------------------------------------------------
-# Your LangChain docs ingestion did not specify a collection name, so that data
-# should be in the default Chroma/LangChain collection, usually "langchain".
-#
-# Your legacy backend ingestion created additional collections in the same
-# chroma_db folder.
-#
 # Instead of hard-coding names, we discover all collections automatically.
 
 
@@ -155,12 +138,10 @@ RETRIEVERS = {
 LOADED_COLLECTION_NAMES = sorted(RETRIEVERS.keys())
 
 
-# ---------------------------------------------------------------------------
-# BM25 reranking
-# ---------------------------------------------------------------------------
+
 # Flow:
 #   1. User asks question.
-#   2. Agent calls retrieve_context with ONE query.
+#   2. Agent calls retrieve_context
 #   3. We retrieve from every Chroma collection using that one query.
 #   4. We deduplicate.
 #   5. We BM25-rerank the candidates.
@@ -253,6 +234,8 @@ def _copy_doc_with_collection_metadata(
 
     This is important because the app now searches multiple collections.
     The LLM and UI should know which collection a chunk came from.
+
+    Also, if a metadata does not have 'source' key, then some fallbacks are designated instead
     """
     metadata = dict(doc.metadata or {})
     metadata["collection"] = collection_name

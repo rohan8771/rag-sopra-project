@@ -2,7 +2,7 @@
 legacy_backend_ingestion.py
 
 Purpose:
-This script builds TWO searchable knowledge layers for our dummy legacy backend.
+This script builds two searchable knowledge layers for our dummy legacy backend.
 
 Layer 1:
     Raw original chunks
@@ -39,14 +39,11 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 # 1. Basic paths
 # ---------------------------------------------------------------------
 
-# This script is expected to live in the project root.
 PROJECT_ROOT = Path(__file__).resolve().parent
 
-# This is the fake legacy codebase we created.
+# This is the dummy legacy codebase we created.
 LEGACY_BACKEND_ROOT = PROJECT_ROOT / "legacy_backend"
 
-# We keep this separate from your existing LangChain docs vector DB.
-# This avoids polluting your already-working chroma_db.
 LEGACY_CHROMA_DIR = PROJECT_ROOT / "chroma_db"
 
 # We also save structured extraction records as JSON for inspection.
@@ -58,14 +55,10 @@ OUTPUT_JSONL_PATH = OUTPUT_DIR / "modernization_records.jsonl"
 # 2. Model / embedding configuration
 # ---------------------------------------------------------------------
 
-# Load .env so OPENAI_API_KEY 
 load_dotenv()
 
-# Same embedding model style as your earlier RAG app.
 EMBEDDING_MODEL = "text-embedding-3-small"
 
-# LangExtract model.
-# You can later change this to gpt-5-mini if you want.
 LANGEXTRACT_MODEL_ID = "gpt-4o-mini"
 
 
@@ -117,7 +110,6 @@ Do not invent facts that are not supported by the text.
 
 
 # Few-shot examples teach LangExtract what shape of extraction we want.
-# The extraction_text values are intentionally copied from the example text.
 EXAMPLES = [
     lx.data.ExampleData(
         text=(
@@ -211,11 +203,7 @@ EXAMPLES = [
 
 def reset_outputs() -> None:
     """
-    Deletes old vectorstore/output files so each run starts cleanly.
-
-    Why?
-    During experiments, repeated ingestion can create duplicate records.
-    Clean reset keeps results easier to understand.
+        Clears the directory where we store the objects extracted by langextract 
     """
    
     if OUTPUT_DIR.exists():
@@ -285,9 +273,6 @@ def build_raw_documents(loaded_files: List[Dict[str, str]]) -> List[Document]:
 
     These documents preserve the raw source material.
 
-    Example user question this helps answer:
-        "Show me where the SOAP call is made."
-        "Which file contains JDBC Statement usage?"
     """
 
     full_file_documents: List[Document] = []
@@ -305,7 +290,6 @@ def build_raw_documents(loaded_files: List[Dict[str, str]]) -> List[Document]:
             )
         )
 
-    # For source code and small docs, we use modest chunks.
     # overlap helps preserve context across chunk boundaries.
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=900,
@@ -347,7 +331,6 @@ def run_langextract_for_file(file_info: Dict[str, str]) -> List[Dict[str, Any]]:
         # Later, for larger/messier docs, we could increase this.
         extraction_passes=1,
 
-        # Smaller buffers can improve extraction precision.
         max_char_buffer=1200,
     )
 
@@ -435,7 +418,6 @@ def build_structured_documents(
     """
     Converts LangExtract records into LangChain Documents.
 
-    These documents form the second knowledge layer.
     """
 
     documents: List[Document] = []
